@@ -9,9 +9,9 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            apt-get update && sudo apt-get install -y gcc make curl patch
+            sudo apt-get update && sudo apt-get install -y gcc make curl patch
             curl -sSfL https://github.com/golangci/golangci-lint/releases/download/v1.31.0/golangci-lint-1.31.0-linux-amd64.tar.gz | tar zx -C /tmp/
-            mv golangci-lint-1.31.0-linux-amd64/golangci-lint /usr/local/bin
+            sudo mv golangci-lint-1.31.0-linux-amd64/golangci-lint /usr/local/bin
       - run:
           name: Build kakasi static library
           command: make all
@@ -31,4 +31,4 @@ workflows:
 executors:
   builder:
     docker:
-      - image: golang:1.16beta1-buster
+      - image: cirlceci/golang:1.15.7
