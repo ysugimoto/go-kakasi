@@ -1,16 +1,40 @@
-KAKASI_INC=$(PWD)/kakasi/kakasi/include
-KAKASI_LIBDIR=$(PWD)/kakasi/kakasi/lib
+.PHONY: deps
 
-CC=gcc
-CFLAGS= -I$(KAKASI_INC) -I/usr/include -L$(KAKASI_LIBDIR) -lkakasi -dynamiclib -o $(TARGET)
-SOURCES=kakasi_wrap.cc
-OBJECTS=$(SOURCES:.cc=.o) $(KAKASI_DYLIB)
-TARGET=$(PWD)/kakasi/kakasi/lib/libkakasi_wrap.dylib
+UNAME := $(shell echo $(shell uname) | tr '[:upper:]' '[:lower:]')
+KAKASI_VERSION=2.3.6
+KAKASI_DIR=kakasi-$(KAKASI_VERSION)
+KAKASI_ARCHIVE=kakasi-$(KAKASI_VERSION).tar.gz
+BUILD_DIR=$(PWD)/.build
+KAKASI_INC=$(BUILD_DIR)/kakasi/include
+KAKASI_LIBDIR=$(BUILD_DIR)/kakasi/lib
+DEPS_DIR=$(PWD)/deps
 
-all: $(TARGET)
+ifeq ($(UNAME), darwin)
+	include tools/darwin.mk
+endif
+ifeq ($(UNAME), linux)
+	include tools/linux.mk
+endif
 
-$(TARGET): $(OBJECTS)
-	$(CC) $(CFLAGS) $< -o $@
+all: deps $(UNAME)
 
-clean:
-	rm $(TARGET) $(OBJECTS)
+deps:
+	if [ ! -d "$(BUILD_DIR)" ]; then\
+		mkdir $(BUILD_DIR);\
+	fi
+
+	cd $(BUILD_DIR) && \
+		curl -o $(KAKASI_ARCHIVE) http://kakasi.namazu.org/stable/$(KAKASI_ARCHIVE) && \
+		tar xvfz $(KAKASI_ARCHIVE) && \
+		patch -u $(KAKASI_DIR)/src/kanjiio.c < ../tools/kanjiio.diff && \
+		patch -u $(KAKASI_DIR)/configure < ../tools/configure.diff
+
+	if [ -f "$(BUILD_DIR)/$(KAKASI_DIR)/Makefile"]; then\
+		make clean;\
+	fi\
+
+	cd $(BUILD_DIR)/$(KAKASI_DIR) && \
+		./configure --prefix=$(BUILD_DIR)/kakasi && \
+		make && \
+		make install
+

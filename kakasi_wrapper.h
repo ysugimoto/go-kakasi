@@ -5,7 +5,7 @@
 extern "C" {
 #endif
 
-char* Kakasi(int argc, char* argv, char* word);
+char* Kakasi(int argc, char** argv, char* word);
 
 #ifdef __cplusplus
 } // extern "C"
