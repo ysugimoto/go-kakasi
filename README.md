@@ -51,10 +51,11 @@ go-kakasi accepts transform option as `kakasi.WithXXX` which corresponds to orig
 
 ## Development
 
-Currently, this package uses kakasi stable version of `2.3.6`, and build environments are:
+Currently, this package uses kakasi stable version of `2.3.6`, build and tested following environments:
 
 - **darwin**: OS X 10.15.7 (Catalina)
 - **linux**: Ubuntu 16.04 (Xenial, in docker)
+- **linux**: Debian 10 (buster, in CircleCI using go1.15.7)
 
 If you want to build kakasi for your environment, You can rebuilt static library as following:
 
