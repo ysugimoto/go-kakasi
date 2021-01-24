@@ -1,3 +1,4 @@
 .build
 playground
-deps/share/
+deps/share/kanwadict
+deps/share/itaijidict
