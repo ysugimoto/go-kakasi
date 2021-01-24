@@ -11,8 +11,6 @@ import (
 	"io"
 	"net/http"
 	"os"
-	// "path/filepath"
-	// "runtime"
 
 	"github.com/rakyll/statik/fs"
 

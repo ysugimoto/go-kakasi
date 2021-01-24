@@ -17,11 +17,11 @@ jobs:
           name: Build kakasi static library
           command: make all
       - run:
-          name: Run Tests
-          command: go test
-      - run:
           name: Linting
           command: make lint
+      - run:
+          name: Run Tests
+          command: go test
 
 workflows:
   version: 2
