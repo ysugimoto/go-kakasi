@@ -24,4 +24,7 @@ func init() {
 		"KANWADICTPATH",
 		filepath.Join(dir, "./deps/share/kanwadict"),
 	)
+	println(
+		filepath.Join(dir, "./deps/share/kanwadict"),
+	)
 }
