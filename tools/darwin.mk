@@ -35,5 +35,5 @@ link:
 
 	install_name_tool -change \
 		"$(BUILD_DIR)/kakasi/lib/libkakasi.2.dylib" \
-		"@rpath/deps/libkakasi.dylib" \
+		"@loader_path/libkakasi.dylib" \
 		"$(DEPS_DIR)/darwin/libkakasi_wrapper.dylib"

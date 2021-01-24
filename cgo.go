@@ -1,9 +1,9 @@
 package kakasi
 
 // #cgo CFLAGS: -I${SRCDIR} -I${SRCDIR}/deps/include
-// #cgo LDFLAGS: -Wl,-rpath,${SRCDIR}
 // #cgo darwin LDFLAGS: -L${SRCDIR} -L${SRCDIR}/deps/darwin -lkakasi -lkakasi_wrapper
 // #cgo linux LDFLAGS: -L${SRCDIR} -L${SRCDIR}/deps/linux -lkakasi
+// #cgo LDFLAGS: -Wl,-rpath,"${SRCDIR}"
 import "C"
 
 import (
