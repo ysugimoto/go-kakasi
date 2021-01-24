@@ -5,7 +5,8 @@ Just wraps pre-built library, you can use kakasi in your Go program.
 
 ## Requirements
 
-We built with Go `1.16beta1`, I appreciate if you can ensure it's be able to build with older version :-)
+- Go: We built with `1.16beta1`, I appreciate if you can ensure it's be able to build with older version :-)
+- gcc
 
 ## Usage
 

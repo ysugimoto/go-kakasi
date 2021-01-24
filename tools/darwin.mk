@@ -10,6 +10,7 @@ copy:
 	cp $(BUILD_DIR)/kakasi/include/* $(DEPS_DIR)/include/
 	cp $(BUILD_DIR)/kakasi/lib/libkakasi.a $(DEPS_DIR)/darwin/
 	cp $(BUILD_DIR)/kakasi/lib/libkakasi.dylib $(DEPS_DIR)/darwin/
+	cp $(BUILD_DIR)/kakasi/share/kakasi/* $(DEPS_DIR)/share/
 
 $(TARGET): $(OBJECTS)
 	$(CC) $(CFLAGS) $< -o $@
