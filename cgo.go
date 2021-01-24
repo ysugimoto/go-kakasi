@@ -9,8 +9,9 @@ import "C"
 import (
 	"fmt"
 	"io"
-	"net/http"
 	"os"
+
+	"net/http"
 
 	"github.com/rakyll/statik/fs"
 
@@ -25,12 +26,14 @@ const (
 	itaijidictFile = "/tmp/itaijidict"
 )
 
-// Resolve path to kanwadict and itaijidict and set envronment path
-// This envioment variables must be set before calling bridge function
-// because kakasi is built with our local path and then these dict path is set as local path.
+// Resolve path to kanwadict and itaijidict and set envronment path.
+// Envioment variables must be set before calling bridge function because kakasi is built with our local path
+// and then these dict path is set as local path.
 // Fortunately, kakasi can lookup dict files from environment and prior to lookup built path
 // so we can resolve these dict files by setting environment variable like KANWADICTPATH and ITAIJIDICTPATH.
-// In go, to resolve bundle path by using runtime package to get actual THIS filepath.
+// But dict files are loaded dynamically in C runtime and then these cannot resolve path on compiled binary,
+// Therefor, dict files should extract bundled data and output to `/tmp/[dict file]`
+// and set environment variables as that file path in initialize phase.
 func init() {
 	dict, err := fs.New()
 	if err != nil {
