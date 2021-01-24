@@ -19,9 +19,10 @@ endif
 all: deps $(UNAME)
 
 deps:
-	if [ ! -d "$(BUILD_DIR)" ]; then\
-		mkdir $(BUILD_DIR);\
+	if [ -d "$(BUILD_DIR)" ]; then\
+		rm -rf $(BUILD_DIR);\
 	fi
+	mkdir $(BUILD_DIR)
 
 	cd $(BUILD_DIR) && \
 		curl -o $(KAKASI_ARCHIVE) http://kakasi.namazu.org/stable/$(KAKASI_ARCHIVE) && \

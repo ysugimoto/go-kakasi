@@ -62,7 +62,7 @@ If you want to build kakasi for your environment, You can rebuilt static library
 git checkout https://github.com/ysugimoto/go-kakasi
 cd go-kakasi
 # Build kakasi in your environment
-make deps
+make all
 # Note that if you're linux, it will be overriden `deps/linux/*` files.
 ```
 
