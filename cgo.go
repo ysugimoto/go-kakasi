@@ -22,7 +22,7 @@ import (
 // so we can resolve these dict files by setting environment variable like KANWADICTPATH and ITAIJIDICTPATH.
 // In go, to resolve bundle path by using runtime package to get actual THIS filepath.
 func init() {
-	_, file, _, _ := runtime.Caller(0)
+	_, file, _, _ := runtime.Caller(0) // nolint: dogsled
 	dir := filepath.Dir(file)
 	os.Setenv(
 		"KANWADICTPATH",

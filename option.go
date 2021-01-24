@@ -6,13 +6,13 @@ type Character string
 // See kakasi's documentation.
 const (
 	ASCII           Character = "a"
-	JISROMAN                  = "j"
-	GRAPHIC                   = "g"
-	KatakanaJIS0201           = "k"
-	Katakana                  = "K"
-	Kanji                     = "J"
-	Hiragana                  = "H"
-	Sign                      = "E"
+	JISROMAN        Character = "j"
+	GRAPHIC         Character = "g"
+	KatakanaJIS0201 Character = "k"
+	Katakana        Character = "K"
+	Kanji           Character = "J"
+	Hiragana        Character = "H"
+	Sign            Character = "E"
 )
 
 type TransformOption func() string

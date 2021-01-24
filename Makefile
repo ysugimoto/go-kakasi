@@ -39,3 +39,8 @@ deps:
 		make && \
 		make install
 
+test:
+	go test
+
+lint:
+	golangci-lint run
