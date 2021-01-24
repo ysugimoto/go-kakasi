@@ -6,5 +6,6 @@ import (
 )
 
 func main() {
-	fmt.Println(kakasi.Transform("群馬県の有名なご当地料理"))
+	ret, err := kakasi.Transform("群馬県の有名なご当地料理", kakasi.WithKanji(kakasi.ASCII))
+	fmt.Println(ret, err)
 }
