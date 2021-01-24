@@ -16,7 +16,7 @@ ifeq ($(UNAME), linux)
 	include tools/linux.mk
 endif
 
-all: deps $(UNAME) static
+all: deps $(UNAME) static clean
 
 deps:
 	if [ -d "$(BUILD_DIR)" ]; then\
@@ -49,3 +49,5 @@ test:
 lint:
 	golangci-lint run
 
+clean:
+	rm -rf $(BUILD_DIR)

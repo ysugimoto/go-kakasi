@@ -29,10 +29,11 @@ link:
 		"@rpath/deps/darwin/libkakasi.dylib" \
 		"$(DEPS_DIR)/darwin/libkakasi.dylib"
 
-	#install_name_tool -id \
-	#	"@rpath/deps/darwin/libkakasi.dylib" \
-	#	"$(DEPS_DIR)/darwin/libkakasi_wrapper.dylib"
-
 	install_name_tool -id \
 		"@rpath/deps/darwin/libkakasi_wrapper.dylib" \
+		"$(DEPS_DIR)/darwin/libkakasi_wrapper.dylib"
+
+	install_name_tool -change \
+		"$(BUILD_DIR)/kakasi/lib/libkakasi.2.dylib" \
+		"@rpath/deps/libkakasi.dylib" \
 		"$(DEPS_DIR)/darwin/libkakasi_wrapper.dylib"
