@@ -16,7 +16,7 @@ ifeq ($(UNAME), linux)
 	include tools/linux.mk
 endif
 
-all: deps $(UNAME)
+all: deps $(UNAME) static
 
 deps:
 	if [ -d "$(BUILD_DIR)" ]; then\
@@ -30,7 +30,7 @@ deps:
 		patch -u $(KAKASI_DIR)/src/kanjiio.c < ../tools/kanjiio.diff && \
 		patch -u $(KAKASI_DIR)/configure < ../tools/configure.diff
 
-	if [ -f "$(BUILD_DIR)/$(KAKASI_DIR)/Makefile"]; then\
+	if [ -f "$(BUILD_DIR)/$(KAKASI_DIR)/Makefile" ]; then\
 		make clean;\
 	fi\
 
@@ -39,8 +39,13 @@ deps:
 		make && \
 		make install
 
+static:
+	rm -rf dict
+	statik -src=deps/share -p=dict -dest=. --include="*"
+
 test:
 	go test
 
 lint:
 	golangci-lint run
+

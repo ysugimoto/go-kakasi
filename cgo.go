@@ -1,18 +1,29 @@
 package kakasi
 
 // #cgo CFLAGS: -I${SRCDIR} -I${SRCDIR}/deps/include
-// #cgo darwin LDFLAGS: -L${SRCDIR} -L${SRCDIR}/deps/darwin -lkakasi -lkakasi_wrapper
+// #cgo darwin LDFLAGS: -L${SRCDIR} -L${SRCDIR}/deps/darwin -lkakasi -lkakasi_wrapper -Wl,-rpath,${SRCDIR}
 // #cgo linux LDFLAGS: -L${SRCDIR} -L${SRCDIR}/deps/linux -lkakasi
 import "C"
 
 import (
+	"fmt"
+	"io"
+	"net/http"
 	"os"
-	"path/filepath"
-	"runtime"
+	// "path/filepath"
+	// "runtime"
+
+	"github.com/rakyll/statik/fs"
 
 	_ "github.com/ysugimoto/go-kakasi/deps/darwin"
 	_ "github.com/ysugimoto/go-kakasi/deps/include"
 	_ "github.com/ysugimoto/go-kakasi/deps/linux"
+	_ "github.com/ysugimoto/go-kakasi/dict"
+)
+
+const (
+	kanwadictFile  = "/tmp/kanwadict"
+	itaijidictFile = "/tmp/itaijidict"
 )
 
 // Resolve path to kanwadict and itaijidict and set envronment path
@@ -22,14 +33,42 @@ import (
 // so we can resolve these dict files by setting environment variable like KANWADICTPATH and ITAIJIDICTPATH.
 // In go, to resolve bundle path by using runtime package to get actual THIS filepath.
 func init() {
-	_, file, _, _ := runtime.Caller(0) // nolint: dogsled
-	dir := filepath.Dir(file)
-	os.Setenv(
-		"KANWADICTPATH",
-		filepath.Join(dir, "./deps/share/kanwadict"),
-	)
-	os.Setenv(
-		"ITAIJIDICTPATH",
-		filepath.Join(dir, "./deps/share/itaijidict"),
-	)
+	dict, err := fs.New()
+	if err != nil {
+		panic(err)
+	}
+
+	if err := putDictFile(dict, kanwadictFile, "/kanwadict"); err != nil {
+		panic(err)
+	}
+	os.Setenv("KANWADICTPATH", kanwadictFile)
+
+	if err := putDictFile(dict, itaijidictFile, "/itaijidict"); err != nil {
+		panic(err)
+	}
+	os.Setenv("ITAIJIDICTPATH", itaijidictFile)
+}
+
+func putDictFile(d http.FileSystem, dest, src string) error {
+	// Regarding dictfile already exists
+	if _, err := os.Stat(dest); err == nil {
+		return nil
+	}
+
+	srcFp, err := d.Open(src)
+	if err != nil {
+		return fmt.Errorf("Failed to open source file: %s, %w", src, err)
+	}
+	defer srcFp.Close()
+
+	destFp, err := os.OpenFile(dest, os.O_CREATE|os.O_WRONLY, 0644)
+	if err != nil {
+		return fmt.Errorf("Failed to open destination file: %s, %w", src, err)
+	}
+	defer destFp.Close()
+
+	if _, err := io.Copy(destFp, srcFp); err != nil {
+		return fmt.Errorf("Failed to copy file: %w", err)
+	}
+	return nil
 }
