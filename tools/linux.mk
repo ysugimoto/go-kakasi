@@ -1,7 +1,12 @@
-linux: copy
+LIB_DIR=$(DEPS_DIR)/darwin
 
-copy:
+linux:
+	if [ -d "$(LIB_DIR)" ]; then\
+		rm -rf $(LIB_DIR);\
+	fi
+	mkdir $(LIB_DIR)
+
 	cp $(BUILD_DIR)/kakasi/include/* $(DEPS_DIR)/include/
-	cp $(BUILD_DIR)/kakasi/lib/libkakasi.a $(DEPS_DIR)/linux/
+	cp $(BUILD_DIR)/kakasi/lib/libkakasi.a $(LIB_DIR)/
 	cp $(BUILD_DIR)/kakasi/share/kakasi/* $(DEPS_DIR)/share/
-	echo "package linux" > $(DEPS_DIR)/linux/vendor.go
+	echo "package linux" > $(LIB_DIR)/vendor.go
