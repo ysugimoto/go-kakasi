@@ -17,14 +17,13 @@ import (
 // Therefore you may see some logs in your stdout.
 func Transform(text string, opts ...TransformOption) (string, error) {
 	args := []*C.char{
-		// Following three option is always required
-		// due to Go <-> C I/O should be utf-8.
+		// Following three options are always required, due to Go <-> C I/O should be utf-8.
 		C.CString("kakasi"),
 		C.CString("-iutf-8"),
 		C.CString("-outf-8"),
 	}
 
-	// User provide transform options
+	// Append user provided transform options
 	for i := range opts {
 		args = append(args, C.CString(opts[i]()))
 	}
@@ -32,7 +31,7 @@ func Transform(text string, opts ...TransformOption) (string, error) {
 	words := C.CString(text)
 	var retChar *C.char
 
-	// Release pointer after function end
+	// Release pointer after function is end
 	defer func() {
 		C.free(unsafe.Pointer(words))
 		for i := range args {
