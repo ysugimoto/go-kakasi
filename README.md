@@ -10,7 +10,7 @@ Just wraps pre-built library, you can use kakasi in your Go program.
 
 ## Usage
 
-This package bundles prebuilt static library, therefore you don't worry what cgo behaves:
+This package bundles prebuilt static library, therefore you don't worry what cgo does:
 
 ```Go
 package main
