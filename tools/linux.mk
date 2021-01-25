@@ -1,4 +1,4 @@
-LIB_DIR=$(DEPS_DIR)/darwin
+LIB_DIR=$(DEPS_DIR)/linux
 
 linux:
 	if [ -d "$(LIB_DIR)" ]; then\
