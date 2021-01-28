@@ -1,6 +1,6 @@
 # go-kakasi
 
-go-kakasi is a C binding library of [kakasi](http://kakasi.namazu.org/index.html.ja).
+go-kakasi is a C binding library of [kakasi](http://kakasi.namazu.org/index.html.en).
 Just wraps pre-built library, you can use kakasi in your Go program.
 
 ## Requirements
