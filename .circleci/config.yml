@@ -32,4 +32,4 @@ workflows:
 executors:
   builder:
     docker:
-      - image: circleci/golang:1.15.7
+      - image: cimg/go:1.15.7
