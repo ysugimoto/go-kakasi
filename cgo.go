@@ -1,7 +1,8 @@
 package kakasi
 
 // #cgo CFLAGS: -I${SRCDIR} -I${SRCDIR}/deps/include
-// #cgo darwin LDFLAGS: -L${SRCDIR} -L${SRCDIR}/deps/darwin -lkakasi -lkakasi_wrapper
+// #cgo darwin,!arm64 LDFLAGS: -L${SRCDIR} -L${SRCDIR}/deps/darwin/x86_64 -lkakasi -lkakasi_wrapper
+// #cgo darwin,arm64 LDFLAGS: -L${SRCDIR} -L${SRCDIR}/deps/darwin/arm64 -lkakasi -lkakasi_wrapper
 // #cgo linux LDFLAGS: -L${SRCDIR} -L${SRCDIR}/deps/linux -lkakasi
 // #cgo LDFLAGS: -Wl,-rpath,"${SRCDIR}"
 import "C"
@@ -15,7 +16,8 @@ import (
 
 	"github.com/rakyll/statik/fs"
 
-	_ "github.com/ysugimoto/go-kakasi/deps/darwin"
+	_ "github.com/ysugimoto/go-kakasi/deps/darwin/arm64"
+	_ "github.com/ysugimoto/go-kakasi/deps/darwin/x86_64"
 	_ "github.com/ysugimoto/go-kakasi/deps/include"
 	_ "github.com/ysugimoto/go-kakasi/deps/linux"
 	_ "github.com/ysugimoto/go-kakasi/dict"
